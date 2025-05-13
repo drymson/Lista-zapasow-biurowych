@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lista zapasów biurowych</title>
+    <link rel="stylesheet" href="style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Lista zapasów biurowych</h1>
+    </header>
+
+    <form id="suppliesForm" class="form">
+        <div class="form-group">
+            <label for="itemName">Nazwa produktu:</label>
+            <input type="text" id="itemName" name="itemName" required/>
+        </div>
+        <div class="form-group">
+            <label for="itemQuantity">Ilość:</label>
+            <input type="number" id="itemQuantity" name="itemQuantity" required min="1"/>
+        </div>
+        <div class="form-group">
+            <label for="itemCategory">Kategoria:</label>
+            <input type="text" id="itemCategory" name="itemCategory" required/>
+        </div>
+        <div class="form-group">
+            <label for="itemPrice">Cena:</label>
+            <input type="number" id="itemPrice" name="itemPrice" required step="0.01" min="0"/>
+        </div>
+        <button type="submit" class="add-button">
+            <i class="fas fa-plus"></i>
+        </button>
+    </form>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Szukaj produktu...">
+        <input type="number" id="filterQuantity" placeholder="Min. ilość" min="0">
+        <button id="sortByName">
+            <i id="nameSortIcon" class="fas fa-sort-alpha-down"></i> Sortuj nazwę
+        </button>
+        <button id="sortByQuantity">
+            <i id="quantitySortIcon" class="fas fa-sort-numeric-down"></i> Sortuj ilość
+        </button>
+        <button id="sortByCategory">
+            <i id="categorySortIcon" class="fas fa-sort-alpha-down"></i> Sortuj kategorię
+        </button>
+            <button id="sortByTotalPrice">
+            <i id="totalPriceSortIcon" class="fas fa-sort-numeric-down"></i> Sortuj cenę całkowitą
+        </button>
+    </div>
+
+    <div class="container">
+        <table id="suppliesList">
+            <thead>
+                <tr>
+                    <th>Nazwa produktu</th>
+                    <th>Ilość</th>
+                    <th>Kategoria</th>
+                    <th>Cena</th> <!-- Nowy nagłówek dla ceny -->
+                    <th>Cena całkowita</th> <!-- Nowy nagłówek dla ceny całkowitej -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Produkty będą dodawane dynamicznie przez JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span id="closeEditModal" class="close">&times;</span>
+            <h2>Edytuj Produkt</h2>
+            <form id="editForm">
+                <label for="editName">Nazwa Produktu</label>
+                <input type="text" id="editName" name="editName" required>
+                <label for="editQuantity">Ilość</label>
+                <input type="number" id="editQuantity" name="editQuantity" required>
+                <label for="editCategory">Kategoria</label>
+                <input type="text" id="editCategory" name="editCategory" required>
+                <label for="editPrice">Cena</label> <!-- Nowe pole w edytowaniu -->
+                <input type="number" id="editPrice" name="editPrice" required step="0.01" min="0">
+                <button type="submit"><i class="fas fa-save"></i> Zapisz</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span id="closeDeleteModal" class="close">&times;</span>
+            <h2>Usuń Produkt</h2>
+            <p>Czy na pewno chcesz usunąć ten produkt?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete"><i class="fas fa-trash-alt"></i> Usuń</button>
+                <button id="cancelDelete"><i class="fas fa-times"></i> Anuluj</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <button class="theme-toggle">🌙</button>
+
+        <div id="exportButtons">
+            <button class="export-button" id="exportCsv">
+                <i class="fas fa-file-csv"></i> Eksportuj CSV
+            </button>
+            <button class="export-button" id="exportPdf">
+                <i class="fas fa-file-pdf"></i> Eksportuj PDF
+            </button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <div id="toastContainer" class="toast-container"></div>
+</body>
+</html>
